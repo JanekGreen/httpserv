@@ -26,14 +26,18 @@ public class WorkerThread implements Runnable {
             processResponse(resourcePath);
         } catch (Exception e) {
             //500
-            System.out.println(e.getMessage());
-            String message = String.format("<H1>Internal server error: %s </h1>", e);
-            Response errorResponse = new Response(500, message);
-            out.write(errorResponse.asString());
+            processError(e);
 
         } finally {
             close();
         }
+    }
+
+    private void processError(Exception e) {
+        System.out.println(e.getMessage());
+        String message = String.format("<H1>Internal server error: %s </h1>", e);
+        Response errorResponse = new Response(500, message);
+        out.write(errorResponse.asString());
     }
 
     private void processResponse(Path resourcePath) throws IOException {
