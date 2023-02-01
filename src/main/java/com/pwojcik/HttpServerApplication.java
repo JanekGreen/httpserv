@@ -4,11 +4,14 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class HttpServerApplication {
 
-    private final ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
+    private final ExecutorService executor;
+
+    public HttpServerApplication(ExecutorService executor) {
+        this.executor = executor;
+    }
 
     public void start(int port) {
         try (ServerSocket server = new ServerSocket(port)) {
